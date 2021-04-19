@@ -30,6 +30,7 @@ public class Main {
         bk.fBackupDataBase();
         Hashtable<String, String> htbKey = new Hashtable<String, String>();
         Hashtable<String, String> htbMean = new Hashtable<String, String>();
+        Hashtable<String, String> HtbHistory = new Hashtable<String, String>();
         ReadFile r = new ReadFile();
         r.ReadFileTXTIntoStructureData(htbKey, htbMean);
         int functionID = 0;
@@ -39,13 +40,13 @@ public class Main {
             functionID = scanner.nextInt();
             switch (functionID) {
                 case 1 -> {
-                    TimKiemTheoKhoa(htbKey);
+                    TimKiemTheoKhoa(htbKey, HtbHistory);
                 }
                 case 2 -> {
-                    TimKiemTheoNghia(htbMean);
+                    TimKiemTheoNghia(htbMean, HtbHistory);
                 }
                 case 3 -> {
-                    LichSuTimKiem(htbKey);
+                    LichSuTimKiem(HtbHistory);
                 }
                 case 4 -> {
                     ThemMotTuVung(htbKey);
@@ -100,7 +101,7 @@ public class Main {
         System.out.println("MỜI BẠN CHỌN CHỨC NĂNG:");
     }
 
-    private static void TimKiemTheoKhoa(Hashtable<String, String> htbKey) {
+    private static void TimKiemTheoKhoa(Hashtable<String, String> htbKey, Hashtable<String, String> HtbHistory) {
         int functionID = 0;
         do {
             System.out.println("\n^^^ CHỨC NĂNG TÌM KIẾM THEO KHÓA ^^^\n");
@@ -116,9 +117,10 @@ public class Main {
                 case 1 -> {
                     System.out.println("Mời bạn nhập khóa(slang):");
                     String key = scanner.next();
-                    if(htbKey.get(key) != null){
+                    if (htbKey.get(key) != null) {
                         System.out.println("Khóa `" + key + "` có nghĩa là `" + htbKey.get(key) + "`.");
-                    }else{
+                        HtbHistory.put(key, htbKey.get(key));
+                    } else {
                         System.out.println("Hệ thông không tìm thấy nghĩa cho khóa là `" + key + "`.");
                     }
                 }
@@ -131,8 +133,8 @@ public class Main {
         } while (functionID != 0);
     }
 
-    private static void TimKiemTheoNghia(Hashtable<String, String> htbMean) {
-         int functionID = 0;
+    private static void TimKiemTheoNghia(Hashtable<String, String> htbMean, Hashtable<String, String> HtbHistory) {
+        int functionID = 0;
         do {
             System.out.println("\n^^^ CHỨC NĂNG TÌM KIẾM THEO NGHĨA ^^^\n");
             System.out.println("0. Thoát chức năng.");
@@ -148,16 +150,17 @@ public class Main {
                     System.out.println("Mời bạn nhập nghĩa:");
                     String mean = scanner.next();
                     mean = mean.trim().toLowerCase();
-                    if(htbMean.get(mean) != null){
-                        String str = "Nghĩa của từ `"+ mean + "` có các khóa là `";
+                    if (htbMean.get(mean) != null) {
+                        String str = "Nghĩa của từ `" + mean + "` có các khóa là `";
                         String means = htbMean.get(mean);
-                        String []aMean = means.trim().split("`");         
-                        for(int i = 0; i < aMean.length - 1;i++){
+                        String[] aMean = means.trim().split("`");
+                        for (int i = 0; i < aMean.length - 1; i++) {
                             str = str + aMean[i] + ", ";
                         }
                         str = str + aMean[aMean.length - 1] + "`.";
+                        HtbHistory.put(mean, str);
                         System.out.println(str);
-                    }else{
+                    } else {
                         System.out.println("Hệ thông không tìm thấy khóa cho nghĩa là `" + mean + "`");
                     }
                 }
@@ -170,8 +173,14 @@ public class Main {
         } while (functionID != 0);
     }
 
-    private static void LichSuTimKiem(Hashtable<String, String> htbKey) {
-        System.out.println("ok");
+    private static void LichSuTimKiem(Hashtable<String, String> HtbHistory) {
+        System.out.println("\n***Lịch Sử Tìm Kiếm *** \n");
+        Set<String> setOfCountries = HtbHistory.keySet();
+
+        // for-each loop
+        for (String key : setOfCountries) {
+            System.out.println(key + " : " + HtbHistory.get(key));
+        }
     }
 
     private static void ThemMotTuVung(Hashtable<String, String> htbKey) {
