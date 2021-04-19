@@ -38,12 +38,12 @@ public class ReadFile {
 //                    }
                     for (String aMean1 : aMean) {
                         // chưa có nghĩa này trong htb mean
-                        if (htbMean.get(aMean1.trim()) == null) {
-                            htbMean.put(aMean1.trim(), String.valueOf(aStr[0]).trim());
+                        if (htbMean.get(aMean1.trim().toLowerCase()) == null) {
+                            htbMean.put(aMean1.trim().toLowerCase(), String.valueOf(aStr[0]).trim());
                         } else {
-                            String temp = htbMean.get(aMean1.trim());
+                            String temp = htbMean.get(aMean1.trim().toLowerCase());
                             temp = temp + "`" + String.valueOf(aStr[0]).trim();
-                            htbMean.put(aMean1.trim(), temp);
+                            htbMean.put(aMean1.trim().toLowerCase(), temp);
                         }
                     }
                 }

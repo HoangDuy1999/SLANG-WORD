@@ -37,13 +37,12 @@ public class Main {
             chiTietChucNang();
             Scanner scanner = new Scanner(System.in);
             functionID = scanner.nextInt();
-            System.out.println(functionID);
             switch (functionID) {
                 case 1 -> {
                     TimKiemTheoKhoa(htbKey);
                 }
                 case 2 -> {
-                    TimKiemTheoNghia(htbKey);
+                    TimKiemTheoNghia(htbMean);
                 }
                 case 3 -> {
                     LichSuTimKiem(htbKey);
@@ -118,9 +117,9 @@ public class Main {
                     System.out.println("Mời bạn nhập khóa(slang):");
                     String key = scanner.next();
                     if(htbKey.get(key) != null){
-                        System.out.println("Khóa `" + key + "` có nghĩa là `" + htbKey.get(key) + "`");
+                        System.out.println("Khóa `" + key + "` có nghĩa là `" + htbKey.get(key) + "`.");
                     }else{
-                        System.out.println("Hệ thông không tìm thấy nghĩa cho khóa là `" + key + "`");
+                        System.out.println("Hệ thông không tìm thấy nghĩa cho khóa là `" + key + "`.");
                     }
                 }
                 default -> {
@@ -132,8 +131,43 @@ public class Main {
         } while (functionID != 0);
     }
 
-    private static void TimKiemTheoNghia(Hashtable<String, String> htbKey) {
-        System.out.println("ok");
+    private static void TimKiemTheoNghia(Hashtable<String, String> htbMean) {
+         int functionID = 0;
+        do {
+            System.out.println("\n^^^ CHỨC NĂNG TÌM KIẾM THEO NGHĨA ^^^\n");
+            System.out.println("0. Thoát chức năng.");
+            System.out.println("1. Tìm kiếm theo nghĩa.");
+            System.out.println("MỜI BẠN CHỌN CHỨC NĂNG:");
+            Scanner scanner = new Scanner(System.in);
+            functionID = scanner.nextInt();
+            switch (functionID) {
+                case 0 -> {
+
+                }
+                case 1 -> {
+                    System.out.println("Mời bạn nhập nghĩa:");
+                    String mean = scanner.next();
+                    mean = mean.trim().toLowerCase();
+                    if(htbMean.get(mean) != null){
+                        String str = "Nghĩa của từ `"+ mean + "` có các khóa là `";
+                        String means = htbMean.get(mean);
+                        String []aMean = means.trim().split("`");         
+                        for(int i = 0; i < aMean.length - 1;i++){
+                            str = str + aMean[i] + ", ";
+                        }
+                        str = str + aMean[aMean.length - 1] + "`.";
+                        System.out.println(str);
+                    }else{
+                        System.out.println("Hệ thông không tìm thấy khóa cho nghĩa là `" + mean + "`");
+                    }
+                }
+                default -> {
+                    System.out.println("\n=============================THÔNG BÁO=============================");
+                    System.out.println("Bạn nhập mã chức năng không đúng. Vui lòng nhập lại.");
+                    System.out.println("\n=============================THÔNG BÁO=============================");
+                }
+            }
+        } while (functionID != 0);
     }
 
     private static void LichSuTimKiem(Hashtable<String, String> htbKey) {
