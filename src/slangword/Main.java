@@ -32,19 +32,6 @@ public class Main {
         Hashtable<String, String> htbMean = new Hashtable<String, String>();
         ReadFile r = new ReadFile();
         r.ReadFileTXTIntoStructureData(htbKey, htbMean);
-        // getting keySet() into Set
-        Set<String> setOfCountries = htbMean.keySet();
-        int i = 0;
-        // for-each loop
-        for (String key : setOfCountries) {
-            if(i > 100){
-                break;
-            }
-            i++;
-//            System.out.println("mean : " + key
-//                    + "\t key : " + htbMean.get(key));
-        }
-        System.out.println(htbMean.get("Angry"));
         int functionID = 0;
         do {
             chiTietChucNang();
@@ -115,7 +102,34 @@ public class Main {
     }
 
     private static void TimKiemTheoKhoa(Hashtable<String, String> htbKey) {
-        System.out.println("ok");
+        int functionID = 0;
+        do {
+            System.out.println("\n^^^ CHỨC NĂNG TÌM KIẾM THEO KHÓA ^^^\n");
+            System.out.println("0. Thoát chức năng.");
+            System.out.println("1. Tìm kiếm theo khóa.");
+            System.out.println("MỜI BẠN CHỌN CHỨC NĂNG:");
+            Scanner scanner = new Scanner(System.in);
+            functionID = scanner.nextInt();
+            switch (functionID) {
+                case 0 -> {
+
+                }
+                case 1 -> {
+                    System.out.println("Mời bạn nhập khóa(slang):");
+                    String key = scanner.next();
+                    if(htbKey.get(key) != null){
+                        System.out.println("Khóa `" + key + "` có nghĩa là `" + htbKey.get(key) + "`");
+                    }else{
+                        System.out.println("Hệ thông không tìm thấy nghĩa cho khóa là `" + key + "`");
+                    }
+                }
+                default -> {
+                    System.out.println("\n=============================THÔNG BÁO=============================");
+                    System.out.println("Bạn nhập mã chức năng không đúng. Vui lòng nhập lại.");
+                    System.out.println("\n=============================THÔNG BÁO=============================");
+                }
+            }
+        } while (functionID != 0);
     }
 
     private static void TimKiemTheoNghia(Hashtable<String, String> htbKey) {
