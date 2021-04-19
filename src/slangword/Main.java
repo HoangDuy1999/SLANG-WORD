@@ -5,6 +5,7 @@
  */
 package slangword;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Hashtable;
@@ -24,10 +25,26 @@ public class Main {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        Hashtable<String, String> htStudents = null;
-   //     ReadFile r = new ReadFile();
-        //htStudents = r.readFile_ArrayObjectStudents();
+    public static void main(String[] args) throws IOException {
+        BackupDatabase bk = new BackupDatabase();
+        bk.fBackupDataBase();
+        Hashtable<String, String> htbKey = new Hashtable<String, String>();
+        Hashtable<String, String> htbMean = new Hashtable<String, String>();
+        ReadFile r = new ReadFile();
+        r.ReadFileTXTIntoStructureData(htbKey, htbMean);
+        // getting keySet() into Set
+        Set<String> setOfCountries = htbMean.keySet();
+        int i = 0;
+        // for-each loop
+        for (String key : setOfCountries) {
+            if(i > 100){
+                break;
+            }
+            i++;
+//            System.out.println("mean : " + key
+//                    + "\t key : " + htbMean.get(key));
+        }
+        System.out.println(htbMean.get("Angry"));
         int functionID = 0;
         do {
             chiTietChucNang();
@@ -36,34 +53,34 @@ public class Main {
             System.out.println(functionID);
             switch (functionID) {
                 case 1 -> {
-                    TimKiemTheoKhoa(htStudents);
+                    TimKiemTheoKhoa(htbKey);
                 }
                 case 2 -> {
-                    TimKiemTheoNghia(htStudents);
+                    TimKiemTheoNghia(htbKey);
                 }
                 case 3 -> {
-                    LichSuTimKiem(htStudents);
+                    LichSuTimKiem(htbKey);
                 }
                 case 4 -> {
-                    ThemMotTuVung(htStudents);
+                    ThemMotTuVung(htbKey);
                 }
                 case 5 -> {
-                    SuaMotMotTuVung(htStudents);
+                    SuaMotMotTuVung(htbKey);
                 }
                 case 6 -> {
-                    XoaMotTuVung(htStudents);
+                    XoaMotTuVung(htbKey);
                 }
                 case 7 -> {
-                    KhoiPhucCSDL(htStudents);
+                    KhoiPhucCSDL(htbKey);
                 }
                 case 8 -> {
-                    HienThiNgauNhien(htStudents);
+                    HienThiNgauNhien(htbKey);
                 }
                 case 9 -> {
-                    KyHieuTimNghia(htStudents);
+                    KyHieuTimNghia(htbKey);
                 }
                 case 10 -> {
-                    NghiaTimKyHieu(htStudents);
+                    NghiaTimKyHieu(htbKey);
                 }
                 case 0 -> {
 
@@ -97,43 +114,43 @@ public class Main {
         System.out.println("MỜI BẠN CHỌN CHỨC NĂNG:");
     }
 
-    private static void TimKiemTheoKhoa(Hashtable<String, String> htStudents) {
+    private static void TimKiemTheoKhoa(Hashtable<String, String> htbKey) {
         System.out.println("ok");
     }
 
-    private static void TimKiemTheoNghia(Hashtable<String, String> htStudents) {
+    private static void TimKiemTheoNghia(Hashtable<String, String> htbKey) {
         System.out.println("ok");
     }
 
-    private static void LichSuTimKiem(Hashtable<String, String> htStudents) {
+    private static void LichSuTimKiem(Hashtable<String, String> htbKey) {
         System.out.println("ok");
     }
 
-    private static void ThemMotTuVung(Hashtable<String, String> htStudents) {
+    private static void ThemMotTuVung(Hashtable<String, String> htbKey) {
         System.out.println("ok");
     }
 
-    private static void SuaMotMotTuVung(Hashtable<String, String> htStudents) {
+    private static void SuaMotMotTuVung(Hashtable<String, String> htbKey) {
         System.out.println("ok");
     }
 
-    private static void XoaMotTuVung(Hashtable<String, String> htStudents) {
+    private static void XoaMotTuVung(Hashtable<String, String> htbKey) {
         System.out.println("ok");
     }
 
-    private static void KhoiPhucCSDL(Hashtable<String, String> htStudents) {
+    private static void KhoiPhucCSDL(Hashtable<String, String> htbKey) {
         System.out.println("ok");
     }
 
-    private static void HienThiNgauNhien(Hashtable<String, String> htStudents) {
+    private static void HienThiNgauNhien(Hashtable<String, String> htbKey) {
         System.out.println("ok");
     }
 
-    private static void KyHieuTimNghia(Hashtable<String, String> htStudents) {
+    private static void KyHieuTimNghia(Hashtable<String, String> htbKey) {
         System.out.println("ok");
     }
 
-    private static void NghiaTimKyHieu(Hashtable<String, String> htStudents) {
+    private static void NghiaTimKyHieu(Hashtable<String, String> htbKey) {
         System.out.println("ok");
     }
 
