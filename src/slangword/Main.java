@@ -57,7 +57,7 @@ public class Main {
                     ThemMotTuVung(htbKey, htbMean);
                 }
                 case 5 -> {
-                    SuaMotMotTuVung(htbKey);
+                    SuaMotMotTuVung(htbKey, htbMean);
                 }
                 case 6 -> {
                     XoaMotTuVung(htbKey);
@@ -99,7 +99,7 @@ public class Main {
         System.out.println("4. Chức năng thêm một slang words.");
         System.out.println("5. Chức năng sửa một slang words.");
         System.out.println("6. Chức năng xóa một slang words.");
-        System.out.println("7. Khôi phục danh sach slang words về nguyên bản.");
+        System.out.println("7. Khôi phục danh sách slang words về nguyên bản.");
         System.out.println("8. Chức năng hiện thi ngẫu nhiên thông tin một slang word ");
         System.out.println("9. Chức năng đố vui, chương trình hiển thị 1 random slang word, với 4 đáp án cho người dùng chọn.");
         System.out.println("10. Chức năng đố vui, chương trình hiển thị 1 definition, với 4 slang words đáp án cho người dùng chọn.");
@@ -354,8 +354,69 @@ public class Main {
         writer.flush();
     }
 
-    private static void SuaMotMotTuVung(Hashtable<String, String> htbKey) {
-        System.out.println("ok");
+    private static void SuaMotMotTuVung(Hashtable<String, String> htbKey, Hashtable<String, String> htbMean) throws IOException {
+        System.out.println("\n*** Chức năng Cập nhật từ vựng ***\n");
+        int functionId = 0;
+        do {
+            System.out.println("0. Quay trở lại trang chủ.");
+            System.out.println("1. Cập nhật từ vựng.");
+            System.out.println("MỜI BẠN CHỌN CHỨC NĂNG:");
+            Scanner scanner = new Scanner(System.in);
+            functionId = scanner.nextInt();
+            switch (functionId) {
+                case 0 -> {
+                }
+                case 1 -> {
+                    System.out.println("Nhập khóa(key) slang word cần chỉnh sửa:");
+                    String key = scanner.next();
+                    if (htbKey.get(key.trim()) != null) {
+                        System.out.println("Thông tin slang word");
+                        System.out.println(key.trim() + " có nghĩa là `" + htbKey.get(key.trim()) + "`");
+                        System.out.println("Mời bạn nhập nghĩa mới cho slang word:");
+                        scanner.nextLine();
+                        String mean = scanner.nextLine();
+
+                        //xử lý
+
+                        String tMean = htbKey.get(key.trim());
+                        String[] aOldMean = tMean.split("\\|");
+                        String[] aNewMean = mean.trim().split("\\|");
+                        GhiDeDuLieuMotDong(key.trim() + "`" + htbKey.get(key.trim()), key.trim() + "`" + mean);
+                        // cập nhật cơ sở dữ liêu thành công
+                        htbKey.put(key.trim(), mean.trim());
+                        // xóa các nghĩa cũ có key này
+                        for (String oldMean : aOldMean) {
+                            if (htbMean.get(oldMean.trim()) != null) {
+                                String temp = htbMean.get(oldMean.trim());
+                                temp = temp.replace(key.trim(), "");
+                                temp = temp.replace("``", "`");
+                                if (temp.length() < 2) {
+                                    temp = "";
+                                    htbMean.remove(oldMean.trim());
+                                } else {
+                                    htbMean.put(oldMean.trim(), temp);
+                                }
+                            }
+                        }
+                        // cập nhật nghĩa mới
+                        for (String newMean : aNewMean) {
+                            if (htbMean.get(newMean.trim()) != null) {
+                                String temp = htbMean.get(newMean.trim());
+                                temp = temp + "`" + key.trim();
+                                htbMean.put(newMean.trim(), temp);
+                            } else {
+                                htbMean.put(newMean.trim(), key.trim());
+                            }
+                        }
+                        System.out.println("\n(^.^)Cập nhật từ vựng thành công(^.^).\n");
+
+                    } else {
+                        System.out.println("\n(`.`)Hệ thông không tìm thấy dữ liệu có khóa là `" + key + "` (`.`).\n");
+                    }
+                }
+            }
+
+        } while (functionId != 0);
     }
 
     private static void XoaMotTuVung(Hashtable<String, String> htbKey) {
