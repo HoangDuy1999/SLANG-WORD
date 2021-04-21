@@ -63,7 +63,7 @@ public class Main {
                     XoaMotTuVung(htbKey, htbMean);
                 }
                 case 7 -> {
-                    KhoiPhucCSDL(htbKey);
+                    KhoiPhucCSDL(htbKey, htbMean);
                 }
                 case 8 -> {
                     HienThiNgauNhien(htbKey);
@@ -413,6 +413,11 @@ public class Main {
                         System.out.println("\n(`.`)Hệ thông không tìm thấy dữ liệu có khóa là `" + key + "` (`.`).\n");
                     }
                 }
+                default -> {
+                    System.out.println("\n=============================THÔNG BÁO=============================");
+                    System.out.println("Bạn nhập mã chức năng không đúng. Vui lòng nhập lại.");
+                    System.out.println("\n=============================THÔNG BÁO=============================");
+                }
             }
 
         } while (functionId != 0);
@@ -463,8 +468,43 @@ public class Main {
         } while (functionId != 0);
     }
 
-    private static void KhoiPhucCSDL(Hashtable<String, String> htbKey) {
-        System.out.println("ok");
+    private static void KhoiPhucCSDL(Hashtable<String, String> htbKey, Hashtable<String, String> htbMean) throws IOException {
+        int functionId = 0;
+        BackupDatabase bk = new BackupDatabase();
+        do {
+            System.out.println("*** CHỨC NĂNG KHÔI PHỤC CƠ SỞ DỮ LIỆU ***");
+            System.out.println("0. Quay lại trang chủ.");
+            System.out.println("1. Reset danh sách slang word về bản gốc(của thầy).");
+            System.out.println("2. Khôi phục cơ sở dữ liệu về bản sao lưu(khi chương trình bắt đầu chạy hệ thông sinh ra 1 file backup).");
+            System.out.println("MỜI BẠN CHỌN CHỨC NĂNG:");
+            Scanner scanner = new Scanner(System.in);
+            functionId = scanner.nextInt();
+            switch (functionId) {
+                case 0 -> {
+                }
+                case 1 -> {
+                    bk.resetDatabase();
+                    ReadFile r = new ReadFile();
+                    htbKey.clear();
+                    htbMean.clear();
+                    r.ReadFileTXTIntoStructureData(htbKey, htbMean);
+                    System.out.println("\n(^.^)Reset cơ sở dữ liệu thành công(^.^).\n");
+                }
+                case 2 -> {
+                    bk.restoreDatabase();
+                    ReadFile r = new ReadFile();
+                    htbKey.clear();
+                    htbMean.clear();
+                    r.ReadFileTXTIntoStructureData(htbKey, htbMean);
+                    System.out.println("\n(^.^)Khôi phục cơ sở dữ liệu thành công(^.^).\n");
+                }
+                default -> {
+                    System.out.println("\n=============================THÔNG BÁO=============================");
+                    System.out.println("Bạn nhập mã chức năng không đúng. Vui lòng nhập lại.");
+                    System.out.println("\n=============================THÔNG BÁO=============================");
+                }
+            }
+        } while (functionId != 0);
     }
 
     private static void HienThiNgauNhien(Hashtable<String, String> htbKey) {
