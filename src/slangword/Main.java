@@ -31,10 +31,14 @@ public class Main {
     public static void main(String[] args) throws IOException {
         BackupDatabase bk = new BackupDatabase();
         bk.fBackupDataBase();
+        //htbKey là lưu key: definition
         Hashtable<String, String> htbKey = new Hashtable<String, String>();
+        //htbMean là lưu nghĩa: tất cả key có nghĩa đó
         Hashtable<String, String> htbMean = new Hashtable<String, String>();
+        // TỐN BỘ NHỚ NHƯNG TRUY XUẤT DỮ LIỆU 0.01 s
         Hashtable<String, String> HtbHistory = new Hashtable<String, String>();
         ReadFile r = new ReadFile();
+        // ĐỌC DỮ LIỆU VÔ CẤP TRÚC DỮ LIỆU
         r.ReadFileTXTIntoStructureData(htbKey, htbMean);
         int functionID = 0;
         do {
@@ -281,6 +285,7 @@ public class Main {
                                 }
                                 case 2 -> {
                                     String tMean = htbKey.get(key.trim());
+                                    System.out.println("Nghĩa cũ "+ tMean);
                                     String[] aOldMean = tMean.split("\\|");
                                     String[] aNewMean = mean.trim().split("\\|");
                                     ArrayList<String> trueNewMean = new ArrayList<>();
@@ -289,7 +294,7 @@ public class Main {
                                     for (int i = 0; i < aNewMean.length; i++) {
                                         check = false;
                                         for (int j = 0; j < aOldMean.length; j++) {
-                                            if (aNewMean[i].trim() == aOldMean[j].trim()) {
+                                            if (aNewMean[i].trim().equals(aOldMean[j].trim())) {
                                                 check = true;
                                             }
                                         }

@@ -1,0 +1,15 @@
+*** Điểm số: 100
+*** Tham Khảo, sao chép, ăn cắp: Tự làm 100 %
+*** Cấu trúc dữ liệu sử dụng: Hastable 1 cái lưu key ra definition, 1 cái lưu definition ra tất cả các key(tốn bộ nhớ nhưng truy xuất mất 0,01 giây)
+*** Số lượng commit: 12( trong 7 ngày).
+*** Giao diện: Console
+- Chức năng 1: 10.
+- Chức năng 2: 10.
+- Chức năng 3: 10.
+- Chức năng 4: 10.
+- Chức năng 5: 10.
+- Chức năng 6: 10.
+- Chức năng 7: 10.
+- Chức năng 8: 10.
+- Chức năng 9: 10.
+- Chức năng 10: 10.
