@@ -12,19 +12,12 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import static java.lang.Math.random;
-import static java.lang.StrictMath.random;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
-import java.util.TreeMap;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  *
@@ -77,7 +70,7 @@ public class Main {
                     KyHieuTimNghia(htbKey);
                 }
                 case 10 -> {
-                    NghiaTimKyHieu(htbKey);
+                    NghiaTimKyHieu(htbKey, htbMean);
                 }
                 case 0 -> {
 
@@ -525,7 +518,6 @@ public class Main {
     private static void KyHieuTimNghia(Hashtable<String, String> htbKey) {
         System.out.println("\n^^^ CHƯƠNG TRINHG ĐỐ VUI ^^^\n");
         System.out.println("Mô tả: Chương trình cho trước một khóa(key) và hiện ra bốn đáp cho người dùng chọn.");
-        int num1, num2, num3, num4;
         Hashtable<Integer, Integer> htbNumber = new Hashtable<Integer, Integer>();
         int len = htbKey.size();
         do {
@@ -568,8 +560,56 @@ public class Main {
         }
     }
 
-    private static void NghiaTimKyHieu(Hashtable<String, String> htbKey) {
-        System.out.println("ok");
+    private static void NghiaTimKyHieu(Hashtable<String, String> htbKey, Hashtable<String, String> htbMean) {
+        System.out.println("\n^^^ CHƯƠNG TRINHG ĐỐ VUI ^^^\n");
+        System.out.println("Mô tả: Chương trình cho trước một nghĩa(definition) và hiện ra bốn đáp cho người dùng chọn.");
+        int num1, num2, num3, num4;
+        int len = htbMean.size();
+        int lenKey = htbKey.size();
+        int rdMean = ThreadLocalRandom.current().nextInt(0, len);
+
+        List<String> listMean = new ArrayList<String>(htbMean.keySet());
+        List<String> listKey = new ArrayList<String>(htbKey.keySet());
+
+        System.out.println("Từ vựng có nghĩa(definition) là: `" + listMean.get(rdMean) + "`.");
+        System.out.println("Hỏi Khóa(key) của nghĩa(definition)là gì?");
+
+        String tam = htbMean.get(listMean.get(rdMean)).trim();
+        String[] aKetQua = tam.split("`");
+
+        List<Integer> zeroToThree = new ArrayList<>();
+        zeroToThree.add(0);
+        zeroToThree.add(1);
+        zeroToThree.add(2);
+        zeroToThree.add(3);
+        Collections.shuffle(zeroToThree);
+        String ketqua = "";
+        String[] alphabet = {"A", "B", "C", "D"};
+        for (int i = 0; i < 4; i++) {
+            if (zeroToThree.get(i) == 0) {
+                ketqua = alphabet[i];
+                System.out.println(alphabet[i] + ". " + aKetQua[0]);
+            } else {
+                do {
+                    int randomNum = ThreadLocalRandom.current().nextInt(0, lenKey);
+                    String temp = listKey.get(randomNum).trim();
+                    if(temp.trim().equals(aKetQua[0].trim()) == false){
+                         System.out.println(alphabet[i] + ". " + temp);
+                         break;
+                    }
+                } while (1 == 1);
+            }
+        }
+        System.out.println("MỜI BẠN CHỌN ĐÁP ÁN");
+        Scanner scanner = new Scanner(System.in);
+        String dapAnNguoiChoi = scanner.next();
+        dapAnNguoiChoi = dapAnNguoiChoi.trim().toUpperCase();
+        System.out.println("Đáp án của ban tổ chức là: `" + ketqua + "`.");
+        if (dapAnNguoiChoi.toString().trim().equals(ketqua.toString().trim())) {
+            System.out.println("\n(^.^)Bạn trả lời ĐÚNG rồi. CHÚC MỪNG, CHÚC MỪNG, CHỨC MỪNG(^.^).\n");
+        } else {
+            System.out.println("\n(-.-)Bạn trả lời SAI rồi. THUA KEO NÀY TA BÀY KEO KHÁC NHA(-.-).\n");
+        }
     }
 
     private static void println(IOException e) {
