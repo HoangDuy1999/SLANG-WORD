@@ -60,7 +60,7 @@ public class Main {
                     SuaMotMotTuVung(htbKey, htbMean);
                 }
                 case 6 -> {
-                    XoaMotTuVung(htbKey);
+                    XoaMotTuVung(htbKey, htbMean);
                 }
                 case 7 -> {
                     KhoiPhucCSDL(htbKey);
@@ -355,7 +355,7 @@ public class Main {
     }
 
     private static void SuaMotMotTuVung(Hashtable<String, String> htbKey, Hashtable<String, String> htbMean) throws IOException {
-        System.out.println("\n*** Chức năng Cập nhật từ vựng ***\n");
+        System.out.println("\n*** CHỨC NĂNG CẬP NHẬT TỪ VỰNG ***\n");
         int functionId = 0;
         do {
             System.out.println("0. Quay trở lại trang chủ.");
@@ -370,14 +370,13 @@ public class Main {
                     System.out.println("Nhập khóa(key) slang word cần chỉnh sửa:");
                     String key = scanner.next();
                     if (htbKey.get(key.trim()) != null) {
-                        System.out.println("Thông tin slang word");
+                        System.out.println("Thông tin slang word:");
                         System.out.println(key.trim() + " có nghĩa là `" + htbKey.get(key.trim()) + "`");
                         System.out.println("Mời bạn nhập nghĩa mới cho slang word:");
                         scanner.nextLine();
                         String mean = scanner.nextLine();
 
                         //xử lý
-
                         String tMean = htbKey.get(key.trim());
                         String[] aOldMean = tMean.split("\\|");
                         String[] aNewMean = mean.trim().split("\\|");
@@ -419,8 +418,49 @@ public class Main {
         } while (functionId != 0);
     }
 
-    private static void XoaMotTuVung(Hashtable<String, String> htbKey) {
-        System.out.println("ok");
+    private static void XoaMotTuVung(Hashtable<String, String> htbKey, Hashtable<String, String> htbMean) throws IOException {
+        int functionId = 0;
+        do {
+            System.out.println("\n*** CHỨC NĂNG XÓA MỘT TỪ VỰNG ***\n");
+            System.out.println("0. Quay lại trang chủ.");
+            System.out.println("1. Xóa một từ vựng.");
+            System.out.println("MỜI BẠN CHỌN CHỨC NĂNG:");
+            Scanner scanner = new Scanner(System.in);
+            functionId = scanner.nextInt();
+            switch (functionId) {
+                case 0 -> {
+                }
+                case 1 -> {
+                    System.out.println("Mời bạn nhập khóa(key) slang word cần xóa:");
+                    String key = scanner.next();
+                    if (htbKey.get(key.trim()) != null) {
+                        GhiDeDuLieuMotDong(key.trim() + "`" + htbKey.get(key.trim()), "");
+                        String means = htbKey.get(key.trim()).trim();
+                        String[] aMean = means.split("\\|");
+                        htbKey.remove(key.trim());
+                        for (String mean : aMean) {
+                            String temp = htbMean.get(mean.trim());
+                            temp = temp.replace(key.trim(), "");
+                            temp = temp.replace("``", "`");
+                            if (temp.length() < 2) {
+                                temp = "";
+                                htbMean.remove(mean.trim());
+                            } else {
+                                htbMean.put(mean.trim(), temp);
+                            }
+                        }
+                        System.out.println("\n(^.^)Xóa từ vựng thành công(^.^).\n");
+                    } else {
+                        System.out.println("\n(`.`)Hệ thông không tìm thấy dữ liệu có khóa là `" + key + "` (`.`).\n");
+                    }
+                }
+                default -> {
+                    System.out.println("\n=============================THÔNG BÁO=============================");
+                    System.out.println("Bạn nhập mã chức năng không đúng. Vui lòng nhập lại.");
+                    System.out.println("\n=============================THÔNG BÁO=============================");
+                }
+            }
+        } while (functionId != 0);
     }
 
     private static void KhoiPhucCSDL(Hashtable<String, String> htbKey) {
