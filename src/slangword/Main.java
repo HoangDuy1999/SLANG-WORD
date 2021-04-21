@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package slangword;
+
 import java.util.concurrent.ThreadLocalRandom;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -14,6 +15,7 @@ import java.io.PrintWriter;
 import static java.lang.Math.random;
 import static java.lang.StrictMath.random;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
@@ -514,14 +516,56 @@ public class Main {
         System.out.println("\n*** CHỨC NĂNG HIỂN THỊ NGẪU NHIÊN MỘT TỪ VỰNG ***\n");
         int len = htbKey.size();
         int randomNum = ThreadLocalRandom.current().nextInt(0, len);
-        List<String> listKey = new ArrayList<String>( htbKey.keySet());
+        List<String> listKey = new ArrayList<String>(htbKey.keySet());
         System.out.println("Tự vựng: ");
         System.out.println(listKey.get(randomNum) + " có nghĩa là `" + htbKey.get(listKey.get(randomNum)) + "`.");
 
     }
 
     private static void KyHieuTimNghia(Hashtable<String, String> htbKey) {
-        System.out.println("ok");
+        System.out.println("\n^^^ CHƯƠNG TRINHG ĐỐ VUI ^^^\n");
+        System.out.println("Mô tả: Chương trình cho trước một khóa(key) và hiện ra bốn đáp cho người dùng chọn.");
+        int num1, num2, num3, num4;
+        Hashtable<Integer, Integer> htbNumber = new Hashtable<Integer, Integer>();
+        int len = htbKey.size();
+        do {
+            int randomNum = ThreadLocalRandom.current().nextInt(0, len);
+            if (htbNumber.get(randomNum) == null) {
+                htbNumber.put(randomNum, randomNum);
+            }
+            if (htbNumber.size() == 4) {
+                break;
+            }
+        } while (htbNumber.size() >= 0);
+        List<Integer> listKeyNumBer = new ArrayList<Integer>(htbNumber.values());
+        List<String> listKey = new ArrayList<String>(htbKey.keySet());
+        System.out.println("Từ vựng có khóa(key) là: `" + listKey.get(listKeyNumBer.get(0)) + "`.");
+        System.out.println("Hỏi nghĩa của khóa(key)là gì?");
+
+        List<Integer> zeroToThree = new ArrayList<>();
+        zeroToThree.add(0);
+        zeroToThree.add(1);
+        zeroToThree.add(2);
+        zeroToThree.add(3);
+        Collections.shuffle(zeroToThree);
+        String ketqua = "";
+        String[] alphabet = {"A", "B", "C", "D"};
+        for (int i = 0; i < 4; i++) {
+            if (zeroToThree.get(i) == 0) {
+                ketqua = alphabet[i];
+            }
+            System.out.println(alphabet[i] + ". " + htbKey.get(listKey.get(listKeyNumBer.get(zeroToThree.get(i)))));
+        }
+        System.out.println("MỜI BẠN CHỌN ĐÁP ÁN");
+        Scanner scanner = new Scanner(System.in);
+        String dapAnNguoiChoi = scanner.next();
+        dapAnNguoiChoi = dapAnNguoiChoi.trim().toUpperCase();
+        System.out.println("Đáp án của ban tổ chức là: `" + ketqua + "`.");
+        if (dapAnNguoiChoi.toString().trim().equals(ketqua.toString().trim())) {
+            System.out.println("\n(^.^)Bạn trả lời ĐÚNG rồi. CHÚC MỪNG, CHÚC MỪNG, CHỨC MỪNG(^.^).\n");
+        } else {
+            System.out.println("\n(-.-)Bạn trả lời SAI rồi. THUA KEO NÀY TA BÀY KEO KHÁC NHA(-.-).\n");
+        }
     }
 
     private static void NghiaTimKyHieu(Hashtable<String, String> htbKey) {
